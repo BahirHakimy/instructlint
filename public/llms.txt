@@ -1,0 +1,25 @@
+# InstructLint
+
+> Deterministic audits for drift between coding-agent instruction files and observable public GitHub repository evidence.
+
+Canonical service: https://instructlint.vercel.app
+OpenAPI: https://instructlint.vercel.app/openapi.json
+Readiness: https://instructlint.vercel.app/api/health
+Source: https://github.com/BahirHakimy/instructlint
+
+## Endpoints
+
+- POST /api/preview — free bounded preview for a public GitHub repository. Input JSON: {"repoUrl":"https://github.com/owner/repository"}
+- POST /api/report — full evidence and suggested instruction patch. When enabled, an unpaid request returns an x402 v2 challenge for $1 USDC on Base.
+
+## Deterministic checks
+
+- Agent guidance discovery: AGENTS.md, CLAUDE.md, Copilot, Cursor, GEMINI.md, Windsurf, and nested scopes.
+- Package-manager claims versus root package metadata and lockfiles.
+- Named package scripts versus root package.json.
+- Explicit repository path references versus the commit-pinned Git tree.
+- Placeholder text, deployment approval boundaries, and orphaned nested scopes.
+
+## Boundaries
+
+Public GitHub repositories only. Read-only fixed GitHub origins. No repository writes, private repository access, database persistence, LLM inference, or buyer private-key collection.

@@ -1,0 +1,110 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "InstructLint API",
+    "version": "1.0.0",
+    "description": "Deterministic drift audits for public GitHub coding-agent instructions. Preview is free; the full report uses an x402 v2 payment challenge."
+  },
+  "servers": [
+    {
+      "url": "https://instructlint.vercel.app"
+    }
+  ],
+  "paths": {
+    "/api/health": {
+      "get": {
+        "operationId": "getServiceHealth",
+        "summary": "Check service and payment readiness",
+        "responses": {
+          "200": {
+            "description": "Current service readiness"
+          }
+        }
+      }
+    },
+    "/api/preview": {
+      "post": {
+        "operationId": "previewRepositoryAudit",
+        "summary": "Preview instruction drift for a public GitHub repository",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RepositoryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Redacted audit preview without evidence or patch suggestions"
+          },
+          "400": {
+            "description": "Invalid request or repository URL"
+          },
+          "404": {
+            "description": "Public repository not found"
+          },
+          "429": {
+            "description": "Preview rate limit reached"
+          }
+        }
+      }
+    },
+    "/api/report": {
+      "post": {
+        "operationId": "purchaseRepositoryAudit",
+        "summary": "Purchase the evidence-linked audit and suggested patch",
+        "description": "An unpaid request receives an x402 v2 PAYMENT-REQUIRED challenge. A compatible client authorizes $1 USDC on Base and retries with its payment signature.",
+        "x-x402": {
+          "version": 2,
+          "network": "eip155:8453",
+          "price": "$1.00"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RepositoryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Full audit with evidence and suggested instruction patches"
+          },
+          "402": {
+            "description": "Payment required; challenge is returned in PAYMENT-REQUIRED"
+          },
+          "503": {
+            "description": "Paid reports are not currently configured"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RepositoryRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "repoUrl"
+        ],
+        "properties": {
+          "repoUrl": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https://github\\.com/[^/]+/[^/]+/?$",
+            "examples": [
+              "https://github.com/owner/repository"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
