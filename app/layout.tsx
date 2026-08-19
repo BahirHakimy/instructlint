@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     description,
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "InstructLint | Agent instruction drift audits",
     description,
   },
