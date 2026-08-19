@@ -101,6 +101,13 @@ describe("paid audit x402 server", () => {
     const httpServer = createPaidAuditHttpServer(config!);
 
     expect(httpServer.server.hasExtension("bazaar")).toBe(true);
+    expect(httpServer.routes).toMatchObject({
+      "/api/report": {
+        serviceName: "InstructLint",
+        tags: ["developer-tools", "agent-instructions", "github", "linting"],
+        iconUrl: "https://instructlint.vercel.app/icon",
+      },
+    });
   });
 
   it("initializes with the pinned route capability when live discovery fails", async () => {

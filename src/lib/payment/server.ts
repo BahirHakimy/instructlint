@@ -46,6 +46,9 @@ export function createPaidAuditHttpServer(
       description:
         "Full InstructLint audit of repository agent instructions, including evidence and repair suggestions.",
       mimeType: "application/json",
+      serviceName: "InstructLint",
+      tags: ["developer-tools", "agent-instructions", "github", "linting"],
+      iconUrl: "https://instructlint.vercel.app/icon",
       extensions: {
         ...declareDiscoveryExtension({
           bodyType: "json",
