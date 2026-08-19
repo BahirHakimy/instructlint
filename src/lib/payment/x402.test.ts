@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { readPaymentConfig, resolvePaymentConfig } from "./config";
+import { createPaidAuditHttpServer } from "./server";
 
 const ADDRESS = "0x1111111111111111111111111111111111111111";
 
@@ -85,5 +86,19 @@ describe("readPaymentConfig", () => {
       status: "invalid",
       message: "Invalid URL",
     });
+  });
+});
+
+describe("paid audit x402 server", () => {
+  it("registers Bazaar enrichment before serving discovery metadata", () => {
+    const config = readPaymentConfig({
+      X402_PAY_TO: ADDRESS,
+      X402_NETWORK: "eip155:8453",
+    });
+
+    expect(config).not.toBeNull();
+    const httpServer = createPaidAuditHttpServer(config!);
+
+    expect(httpServer.server.hasExtension("bazaar")).toBe(true);
   });
 });
