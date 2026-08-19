@@ -3,7 +3,12 @@
   "info": {
     "title": "InstructLint API",
     "version": "1.0.0",
-    "description": "Deterministic drift audits for public GitHub coding-agent instructions. Preview is free; the full report uses an x402 v2 payment challenge."
+    "description": "Deterministic drift audits for public GitHub coding-agent instructions. Preview is free; the full report uses an x402 v2 payment challenge.",
+    "x-guidance": "POST a canonical public GitHub repository URL as repoUrl. Use /api/preview for the free bounded result or /api/report for the $1 USDC evidence and suggested-patch report.",
+    "contact": {
+      "name": "InstructLint support",
+      "url": "https://github.com/BahirHakimy/instructlint/issues"
+    }
   },
   "servers": [
     {
@@ -15,6 +20,7 @@
       "get": {
         "operationId": "getServiceHealth",
         "summary": "Check service and payment readiness",
+        "security": [],
         "responses": {
           "200": {
             "description": "Current service readiness"
@@ -26,6 +32,7 @@
       "post": {
         "operationId": "previewRepositoryAudit",
         "summary": "Preview instruction drift for a public GitHub repository",
+        "security": [],
         "requestBody": {
           "required": true,
           "content": {
@@ -65,7 +72,9 @@
         },
         "x-payment-info": {
           "protocols": [
-            "x402"
+            {
+              "x402": {}
+            }
           ],
           "price": {
             "mode": "fixed",
