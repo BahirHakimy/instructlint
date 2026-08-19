@@ -6,6 +6,7 @@ The public preview is free. The full evidence-linked report and suggested instru
 
 - Live service: [instructlint.vercel.app](https://instructlint.vercel.app)
 - OpenAPI description: [instructlint.vercel.app/openapi.json](https://instructlint.vercel.app/openapi.json)
+- x402 discovery document: [instructlint.vercel.app/.well-known/x402](https://instructlint.vercel.app/.well-known/x402)
 - Machine-readable overview: [instructlint.vercel.app/llms.txt](https://instructlint.vercel.app/llms.txt)
 - Reproducible sample report: [instructlint.vercel.app/sample-report.json](https://instructlint.vercel.app/sample-report.json)
 - Readiness: [instructlint.vercel.app/api/health](https://instructlint.vercel.app/api/health)
@@ -41,6 +42,8 @@ An unpaid request receives HTTP `402` with a `PAYMENT-REQUIRED` header. After a 
 Configure and fund Agentic Wallet on the same Base network advertised by the endpoint before purchasing. Never paste a wallet private key into InstructLint; the payment client signs locally. See the [official Agentic Wallet documentation](https://docs.cdp.coinbase.com/x402/agentic-accounts/agentic-wallet).
 
 Service readiness is available at `GET /api/health`.
+Discovery clients can start at `GET /.well-known/x402` or the OpenAPI
+description; both identify the paid report route.
 
 ## What is checked
 

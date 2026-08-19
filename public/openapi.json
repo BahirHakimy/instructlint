@@ -63,6 +63,16 @@
           "price": "$1.00",
           "settlement": "after-successful-handler-response"
         },
+        "x-payment-info": {
+          "protocols": [
+            "x402"
+          ],
+          "price": {
+            "mode": "fixed",
+            "currency": "USD",
+            "amount": "1.00"
+          }
+        },
         "requestBody": {
           "required": true,
           "content": {
