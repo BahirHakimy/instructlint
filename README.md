@@ -81,7 +81,8 @@ Base Sepolia test configuration:
 X402_PAY_TO=0x...
 X402_NETWORK=eip155:84532
 X402_FACILITATOR_URL=https://x402.org/facilitator
-X402_PRICE=$1.00
+# Optional. Leave blank to use the built-in $1.00 default.
+X402_PRICE=
 ```
 
 Base mainnet configuration:
@@ -90,7 +91,8 @@ Base mainnet configuration:
 X402_PAY_TO=0x...
 X402_NETWORK=eip155:8453
 X402_FACILITATOR_URL=https://facilitator.payai.network
-X402_PRICE=$1.00
+# Optional. Leave blank to use the built-in $1.00 default.
+X402_PRICE=
 ```
 
 `GITHUB_TOKEN` is optional and increases GitHub API limits. Use a read-only token if one is configured.
