@@ -245,6 +245,9 @@ export default function Home() {
                 ? `Endpoint ready: ${paymentLabel}.`
                 : "Free previews are live. Mainnet payment activation is pending."}
             </p>
+            <a className="sample-link" href="/sample-report.json">
+              Inspect a reproducible sample full report →
+            </a>
           </div>
           <pre className="code-block" aria-label="API example">
             <code>{`# Inspect the x402 challenge without paying

@@ -1,0 +1,148 @@
+{
+  "sample": {
+    "synthetic": true,
+    "generatedBy": "src/lib/analysis/instructlint.ts",
+    "fixture": "Five-file demo repository with intentionally stale guidance",
+    "note": "This is a reproducible product example, not a claim about a real repository."
+  },
+  "audit": {
+    "mode": "full",
+    "score": 33,
+    "counts": {
+      "total": 5,
+      "critical": 1,
+      "high": 2,
+      "medium": 1,
+      "low": 1
+    },
+    "inventory": {
+      "totalFiles": 5,
+      "guidanceFiles": [
+        {
+          "path": "AGENTS.md",
+          "kind": "agents",
+          "scope": "."
+        }
+      ],
+      "packageManager": "npm@10.9.3",
+      "lockfileManagers": [
+        "npm"
+      ],
+      "packageScripts": [
+        "lint",
+        "test"
+      ],
+      "deploymentConfigFiles": [
+        "vercel.json"
+      ]
+    },
+    "findings": [
+      {
+        "id": "deployment-approval:vercel-json",
+        "category": "deployment-approval",
+        "severity": "critical",
+        "title": "Deployment config lacks an explicit no-deploy or approval rule",
+        "detail": "vercel.json exists, but guidance does not explicitly block or require approval for deployment.",
+        "evidence": [
+          {
+            "file": "vercel.json",
+            "line": 1,
+            "excerpt": "deployment config present"
+          }
+        ],
+        "suggestion": {
+          "file": "AGENTS.md",
+          "description": "Add a deployment safety rule to the agent guidance.",
+          "patch": "Add: Do not deploy or modify production deployment state without explicit user approval."
+        }
+      },
+      {
+        "id": "package-manager-mismatch:agents-md-2-pnpm",
+        "category": "package-manager-mismatch",
+        "severity": "high",
+        "title": "Guidance uses pnpm, but package.json declares npm",
+        "detail": "pnpm test conflicts with the repository's declared npm package manager.",
+        "evidence": [
+          {
+            "file": "AGENTS.md",
+            "line": 2,
+            "excerpt": "Run `pnpm test` and `npm run deploy` before handoff."
+          },
+          {
+            "file": "package.json",
+            "line": 1,
+            "excerpt": "\"packageManager\": \"npm@10.9.3\""
+          }
+        ],
+        "suggestion": {
+          "file": "AGENTS.md",
+          "description": "Use the declared npm package manager in agent commands.",
+          "patch": "Replace \"pnpm test\" with the equivalent npm command."
+        }
+      },
+      {
+        "id": "missing-script:agents-md-deploy",
+        "category": "missing-script",
+        "severity": "high",
+        "title": "Guidance references missing package script \"deploy\"",
+        "detail": "npm run deploy is documented, but package.json does not define a deploy script.",
+        "evidence": [
+          {
+            "file": "AGENTS.md",
+            "line": 2,
+            "excerpt": "Run `pnpm test` and `npm run deploy` before handoff."
+          },
+          {
+            "file": "package.json",
+            "line": 1,
+            "excerpt": "package.json scripts"
+          }
+        ],
+        "suggestion": {
+          "file": "AGENTS.md",
+          "description": "Use an existing package.json script or add the missing script intentionally.",
+          "patch": "Replace \"npm run deploy\" with a defined script such as \"lint\", \"test\"."
+        }
+      },
+      {
+        "id": "missing-path:agents-md-src-retired-ts",
+        "category": "missing-path",
+        "severity": "medium",
+        "title": "Guidance references missing path \"src/retired.ts\"",
+        "detail": "AGENTS.md points to src/retired.ts, but that path is not present in the repository inventory.",
+        "evidence": [
+          {
+            "file": "AGENTS.md",
+            "line": 3,
+            "excerpt": "Read `src/retired.ts` before changing the entrypoint."
+          }
+        ],
+        "suggestion": {
+          "file": "AGENTS.md",
+          "description": "Remove stale path guidance or update it to the current repository path.",
+          "patch": "Replace or delete the reference to src/retired.ts."
+        }
+      },
+      {
+        "id": "placeholder-guidance:agents-md-5",
+        "category": "placeholder-guidance",
+        "severity": "low",
+        "title": "Guidance contains placeholder text",
+        "detail": "Placeholder guidance weakens deterministic agent behavior.",
+        "evidence": [
+          {
+            "file": "AGENTS.md",
+            "line": 5,
+            "excerpt": "TODO: replace this placeholder with the real release checklist."
+          }
+        ],
+        "suggestion": {
+          "file": "AGENTS.md",
+          "description": "Replace placeholder text with repository-specific operating instructions.",
+          "patch": "Write the concrete command, boundary, or rule this placeholder was meant to capture."
+        }
+      }
+    ],
+    "truncated": false
+  }
+}

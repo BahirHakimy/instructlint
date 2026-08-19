@@ -549,6 +549,13 @@ details p,
   background: rgba(68, 244, 170, 0.08);
 }
 
+.sample-link {
+  display: inline-block;
+  margin-top: 16px;
+  color: var(--accent);
+  font-weight: 800;
+}
+
 .code-block {
   margin: 0;
   padding: 22px;

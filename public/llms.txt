@@ -4,6 +4,7 @@
 
 Canonical service: https://instructlint.vercel.app
 OpenAPI: https://instructlint.vercel.app/openapi.json
+Sample full report: https://instructlint.vercel.app/sample-report.json
 Readiness: https://instructlint.vercel.app/api/health
 Source: https://github.com/BahirHakimy/instructlint
 

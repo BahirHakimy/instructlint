@@ -7,6 +7,7 @@ The public preview is free. The full evidence-linked report and suggested instru
 - Live service: [instructlint.vercel.app](https://instructlint.vercel.app)
 - OpenAPI description: [instructlint.vercel.app/openapi.json](https://instructlint.vercel.app/openapi.json)
 - Machine-readable overview: [instructlint.vercel.app/llms.txt](https://instructlint.vercel.app/llms.txt)
+- Reproducible sample report: [instructlint.vercel.app/sample-report.json](https://instructlint.vercel.app/sample-report.json)
 - Readiness: [instructlint.vercel.app/api/health](https://instructlint.vercel.app/api/health)
 
 ## API
