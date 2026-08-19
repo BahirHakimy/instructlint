@@ -1,4 +1,5 @@
-import { describe, expect, it } from "vitest";
+import type { FacilitatorClient } from "@x402/core/http";
+import { describe, expect, it, vi } from "vitest";
 
 import { readPaymentConfig, resolvePaymentConfig } from "./config";
 import { createPaidAuditHttpServer } from "./server";
@@ -100,5 +101,34 @@ describe("paid audit x402 server", () => {
     const httpServer = createPaidAuditHttpServer(config!);
 
     expect(httpServer.server.hasExtension("bazaar")).toBe(true);
+  });
+
+  it("initializes with the pinned route capability when live discovery fails", async () => {
+    const config = readPaymentConfig({
+      X402_PAY_TO: ADDRESS,
+      X402_NETWORK: "eip155:8453",
+    });
+    const unavailableFacilitator: FacilitatorClient = {
+      getSupported: vi.fn().mockRejectedValue(new Error("temporary timeout")),
+      verify: vi.fn(),
+      settle: vi.fn(),
+    };
+
+    expect(config).not.toBeNull();
+    const httpServer = createPaidAuditHttpServer(
+      config!,
+      unavailableFacilitator,
+    );
+
+    await expect(httpServer.initialize()).resolves.toBeUndefined();
+    expect(
+      httpServer.server.getSupportedKind(2, "eip155:8453", "exact"),
+    ).toEqual({
+      x402Version: 2,
+      scheme: "exact",
+      network: "eip155:8453",
+    });
+    expect(unavailableFacilitator.verify).not.toHaveBeenCalled();
+    expect(unavailableFacilitator.settle).not.toHaveBeenCalled();
   });
 });

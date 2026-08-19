@@ -1,4 +1,7 @@
-import { HTTPFacilitatorClient } from "@x402/core/http";
+import {
+  HTTPFacilitatorClient,
+  type FacilitatorClient,
+} from "@x402/core/http";
 import {
   x402HTTPResourceServer,
   x402ResourceServer,
@@ -11,12 +14,19 @@ import {
 } from "@x402/extensions/bazaar";
 
 import type { PaymentConfig } from "./config";
+import { withSupportedFallback } from "./facilitator";
 
-export function createPaidAuditHttpServer(config: PaymentConfig) {
-  const facilitator = new HTTPFacilitatorClient({
+export function createPaidAuditHttpServer(
+  config: PaymentConfig,
+  primaryFacilitator: FacilitatorClient = new HTTPFacilitatorClient({
     url: config.facilitatorUrl,
     timeoutMs: 8_000,
-  });
+  }),
+) {
+  const facilitator = withSupportedFallback(
+    primaryFacilitator,
+    config.network as Network,
+  );
   const server = new x402ResourceServer(facilitator).register(
     "eip155:*",
     new ExactEvmScheme(),
