@@ -331,13 +331,13 @@ npx awal@2.12.1 x402 pay \\
           </nav>
           <a
             className="directory-badge"
-            href="https://www.web3toollaunch.com/"
+            href="https://www.web3toollaunch.com/tool/instructlint/"
             target="_blank"
             rel="noopener"
           >
             <Image
               src="https://www.web3toollaunch.com/badge.svg"
-              alt="Listed on Web3ToolLaunch"
+              alt="InstructLint - Listed on Web3ToolLaunch"
               width="210"
               height="40"
               loading="lazy"
