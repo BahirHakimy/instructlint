@@ -56,11 +56,12 @@
       "post": {
         "operationId": "purchaseRepositoryAudit",
         "summary": "Purchase the evidence-linked audit and suggested patch",
-        "description": "An unpaid request receives an x402 v2 PAYMENT-REQUIRED challenge. A compatible client authorizes $1 USDC on Base and retries with its payment signature.",
+        "description": "An unpaid request receives an x402 v2 PAYMENT-REQUIRED challenge. A compatible client authorizes $1 USDC on Base and retries with its payment signature. Payment settles only after the full report handler returns a successful response; application errors are not settled.",
         "x-x402": {
           "version": 2,
           "network": "eip155:8453",
-          "price": "$1.00"
+          "price": "$1.00",
+          "settlement": "after-successful-handler-response"
         },
         "requestBody": {
           "required": true,
@@ -78,6 +79,30 @@
           },
           "402": {
             "description": "Payment required; challenge is returned in PAYMENT-REQUIRED"
+          },
+          "400": {
+            "description": "Invalid JSON, request shape, or repository URL; payment is not settled"
+          },
+          "403": {
+            "description": "Private repositories are unsupported; payment is not settled"
+          },
+          "404": {
+            "description": "Public repository not found; payment is not settled"
+          },
+          "413": {
+            "description": "Request or bounded repository snapshot exceeds service limits; payment is not settled"
+          },
+          "429": {
+            "description": "GitHub upstream rate limit reached; payment is not settled"
+          },
+          "500": {
+            "description": "Unexpected audit failure; payment is not settled"
+          },
+          "502": {
+            "description": "GitHub returned an unavailable or invalid response; payment is not settled"
+          },
+          "504": {
+            "description": "GitHub retrieval timed out; payment is not settled"
           },
           "503": {
             "description": "Paid reports are not currently configured"

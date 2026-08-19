@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { PreviewForm } from "@/components/PreviewForm";
 import { resolvePaymentConfig } from "@/src/lib/payment/config";
 
@@ -251,7 +253,7 @@ export default function Home() {
           </div>
           <pre className="code-block" aria-label="API example">
             <code>{`# Inspect the x402 challenge without paying
-curl -i -X POST /api/report \\
+curl -i -X POST https://instructlint.vercel.app/api/report \\
   -H 'content-type: application/json' \\
   -d '{"repoUrl":"https://github.com/acme/repo"}'
 
@@ -322,7 +324,26 @@ npx awal@2.12.1 x402 pay \\
             <a href="/openapi.json">OpenAPI</a>
             <a href="/llms.txt">llms.txt</a>
             <a href="/api/health">Service status</a>
+            <a href="/policies">Privacy &amp; terms</a>
+            <a href="https://github.com/BahirHakimy/instructlint/issues/new?title=Paid%20report%20delivery%20support">
+              Support
+            </a>
           </nav>
+          <a
+            className="directory-badge"
+            href="https://www.web3toollaunch.com/"
+            target="_blank"
+            rel="noopener"
+          >
+            <Image
+              src="https://www.web3toollaunch.com/badge.svg"
+              alt="Listed on Web3ToolLaunch"
+              width="210"
+              height="40"
+              loading="lazy"
+              unoptimized
+            />
+          </a>
         </div>
       </footer>
     </main>
